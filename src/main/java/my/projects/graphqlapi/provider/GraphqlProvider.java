@@ -18,7 +18,7 @@ import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeRuntimeWiring;
 import lombok.val;
-import my.projects.graphqlapi.datafetcher.GraphqlDataFetchers;
+import my.projects.graphqlapi.datafetcher.DataFetchers;
 
 @Component 
 public class GraphqlProvider {
@@ -26,8 +26,7 @@ public class GraphqlProvider {
     private GraphQL graphQL;
     
     @Autowired
-    GraphqlDataFetchers graphQlDataFetchers;
-    
+    DataFetchers dataFetchers;
     
     @PostConstruct
     public void init() throws IOException {
@@ -47,8 +46,12 @@ public class GraphqlProvider {
     
     private RuntimeWiring buildWiring() {
         return RuntimeWiring.newRuntimeWiring()
-            .type(TypeRuntimeWiring.newTypeWiring("Query")
-                    .dataFetcher("allLinks", graphQlDataFetchers.getAllLinksDataFetcher()))
+            .type(TypeRuntimeWiring
+                .newTypeWiring("Query")
+                .dataFetcher("allLinks", this.dataFetchers.getAllLinksDataFetcher()))
+            .type(TypeRuntimeWiring
+                .newTypeWiring("Mutation")
+                .dataFetcher("createLink", this.dataFetchers.createLinkDataFetcher()))
             .build();
     }
 

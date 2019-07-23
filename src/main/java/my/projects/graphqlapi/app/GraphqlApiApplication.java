@@ -7,7 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan({
     "my.projects.graphqlapi.provider",
-    "my.projects.graphqlapi.datafetcher"
+    "my.projects.graphqlapi.datafetcher",
+    "my.projects.graphqlapi.repository",
 })
 public class GraphqlApiApplication {
 
