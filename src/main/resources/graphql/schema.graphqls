@@ -1,0 +1,13 @@
+type Link {
+  url: String!
+  description: String!
+}
+
+type Query {
+  # a type of query which returns all links
+  allLinks: [Link!]!
+}
+
+schema {
+  query: Query
+}
